@@ -38,13 +38,14 @@ class LogisticRegression:
         self.__dw = np.dot(X, (y_pred - y_true).T) / m
         self.__db = np.sum(y_pred - y_true) / m
 
-    def fit(self, X, y_true):
-        X = X.T
-        self.__w = np.zeros((X.shape[0], 1))
+    def fit(self, X, y):
+        self.__w = np.zeros((X.shape[1], 1))
         self.__b = 0
 
+        y_true = np.array(y).reshape((1, X.shape[0]))
+
         for i in range(self.__epochs):
-            self.__propagate(X, y_true)
+            self.__propagate(X.T, y_true)
             self.__w -= self.__learning_rate * self.__dw
             self.__b -= self.__learning_rate * self.__db
 
@@ -52,14 +53,6 @@ class LogisticRegression:
                 print(f"Cost = {self.__cost}")
 
     def predict(self, X):
+        X = X.T
         y_pred = self.__sigmoid(np.dot(self.__w.T, X) + self.__b)
         return np.vectorize(lambda x: 0 if x < 0.5 else 1)(y_pred)
-
-
-# model = LogisticRegression(reg=0)
-# df = pd.read_csv("Iris.csv")
-# df_binary = df.drop(df[df["Species"] == "Iris-virginica"].index, axis=0).drop(
-#     ["Id"], axis=1
-# )
-# encoding = {"Iris-setosa" : 0, "Iris-versicolor" : 1}
-# df_binary["Species"] = df_binary["Species"].map(encoding)
