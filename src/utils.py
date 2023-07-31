@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 
 def f1_score(y_true, y_pred):
@@ -39,8 +40,6 @@ def preprocess_mushroom():
 
 
 def preprocess_bcancer():
-    from sklearn.preprocessing import MinMaxScaler
-
     df_canc = pd.read_csv("bcancer.csv")
     df_canc.drop(["Unnamed: 32", "id"], axis=1, inplace=True)
     encoding = {"B": 0, "M": 1}
@@ -50,5 +49,6 @@ def preprocess_bcancer():
     scaler.fit(X_canc)
     X_transform = scaler.transform(X_canc)
     y_canc = df_canc["diagnosis"].copy()
+    X_transform_df = pd.DataFrame(X_transform, columns=X_canc.columns)
 
-    return X_canc, y_canc
+    return X_transform_df, y_canc
