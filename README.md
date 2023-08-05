@@ -9,7 +9,7 @@ Implementation of K-Nearest-Neighbors (KNN), Logistic Regression, and ID3 Algori
 
 
 ## General Information
-Implementation of K-Nearest-Neighbors (KNN), Logistic Regression, and ID3 Algorithm using Python. KNN and Logistic Regression can be used to solve binary classification problem for ![Iris](https://www.kaggle.com/datasets/uciml/iris) and ![Breast Cancer](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data) dataset. ID3 Algorithm can be used to solve binary classification problem for ![Mushroom Classification](https://www.kaggle.com/datasets/uciml/mushroom-classification) dataset
+Implementation of K-Nearest-Neighbors (KNN), Logistic Regression, and ID3 Algorithm using Python. KNN and Logistic Regression can be used to solve binary classification problem for [Iris](https://www.kaggle.com/datasets/uciml/iris) and [Breast Cancer](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data) dataset. ID3 Algorithm can be used to solve binary classification problem for [Mushroom Classification](https://www.kaggle.com/datasets/uciml/mushroom-classification) dataset
 
 
 ## Technologies Used
