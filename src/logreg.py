@@ -5,7 +5,7 @@ import pandas as pd
 class LogisticRegression:
     """Logistic regression"""
 
-    def __init__(self, epochs=500, learning_rate=0.01, reg="l2"):
+    def __init__(self, epochs=500, learning_rate=0.01, reg="l2", lambda_reg=0.01):
         self._w = None
         self._b = None
         self._dw = None
@@ -15,12 +15,13 @@ class LogisticRegression:
         self._epochs = epochs
         self._learning_rate = learning_rate
         self._reg = reg
+        self._lambda_reg = lambda_reg
 
-    def _logloss(self, y_pred, y_true):
+    def _logloss(self, y_pred, y_true, m):
         if self._reg == "l2":
             return np.sum(
                 -y_true * np.log(y_pred) - (1 - y_true) * np.log(1 - y_pred)
-            ) + 0.01 * np.sum(self._w**2)
+            ) + (self._lambda_reg / (2 * m)) * np.sum(self._w**2)
         else:
             return np.sum(-y_true * np.log(y_pred) - (1 - y_true) * np.log(1 - y_pred))
 
@@ -32,11 +33,13 @@ class LogisticRegression:
 
         # Forward propagation
         y_pred = self._sigmoid(np.dot(self._w.T, X) + self._b)
-        self._cost = self._logloss(y_pred, y_true)
+        self._cost = self._logloss(y_pred, y_true, m)
 
         # Backward propagation
         if self._reg == "l2":
-            self._dw = (np.dot(X, (y_pred - y_true).T) / m) + (0.01 / m) * self._w
+            self._dw = (np.dot(X, (y_pred - y_true).T) / m) + (
+                self._lambda_reg / m
+            ) * self._w
         else:
             self._dw = np.dot(X, (y_pred - y_true).T) / m
         self._db = np.sum(y_pred - y_true) / m
