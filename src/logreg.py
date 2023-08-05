@@ -35,7 +35,10 @@ class LogisticRegression:
         self._cost = self._logloss(y_pred, y_true)
 
         # Backward propagation
-        self._dw = np.dot(X, (y_pred - y_true).T) / m
+        if self._reg == "l2":
+            self._dw = (np.dot(X, (y_pred - y_true).T) / m) + (0.01 / m) * self._w
+        else:
+            self._dw = np.dot(X, (y_pred - y_true).T) / m
         self._db = np.sum(y_pred - y_true) / m
 
     def fit(self, X, y):
